@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>黄斑区和视盘的目标检测</title>
+    <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      line-height:1.5em;
+      color: #232323;
+      -webkit-font-smoothing: antialiased;
+    }
+    .imgbox{overflow:hidden;}
+    .imgbox img{float:left}
+    h1, h2, h3 {
+      font-family: Times, serif;
+      line-height:1.5em;
+      border-bottom: 1px solid #ccc;
+    }
+    .hide{
+                display: none;
+            }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>黄斑区和视盘的目标检测</h1>
+    </div>
+     <form class="form-inline" role="form" action="" method="post" enctype="multipart/form-data" >
+         <div class="inputBox">
+            <i class="close hide" id="close1"></i>
+            <input type="file" name="img" class="fileInput" id="pic1" onChange="inputChange('pic1','inputImg1','close1')" />
+            <input type="submit" name="submit" value="提交" >
+        </div>
+        <div style="float:left;width:50%">检测阈值：<input type="text" name="threshold" placeholder="阈值范围:0~0.9，默认0.5"></div>
+    </form>
+    <br>
+    <img width=720 height=540 style="border:1px solid #999;padding:2px;position:absolute;left:10px;top:150px" src="" id="inputImg1" class="baseImg hide"/>
+    <div class="imgbox" style="border:1px solid #999;padding:2px;position:absolute;left:10px;top:150px">
+        <img width=720 height=540 src="data:;base64,{{ img_stream_detection }}" onerror="this.style.visibility='hidden'">
+    </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script>
+    function inputChange(picId,imgId,closeId){
+                var files = document.getElementById(picId).files;
+                console.log(files);
+
+                if(files.length == 0) return;
+                var form = new FormData(),
+                    file = files[0];
+                form.append('file', file);
+
+                var reader = new FileReader();
+                reader.readAsDataURL(file); //base64
+                //接收到图片时触发onload
+                reader.onload = function(e){
+                    var result = reader.result;
+                    console.log(result);
+                    document.getElementById(imgId).src = result;
+                    document.getElementById(imgId).classList.remove('hide');
+                    document.getElementById(closeId).classList.remove('hide');
+                };
+
+//                $.ajax({
+//                    url: '/upload',
+//                    type: 'POST',
+//                    cache: false,
+//                    data: formData,
+//                    processData: false,
+//                    contentType: false
+//                }).done(function(res) {
+//
+//                }).fail(function(res) {});
+            }
+//            document.getElementById('pic1').addEventListener('click', function() { this.value = ''; }, false);
+
+            $(function(){
+                $('.close').click(function(){
+                    $(this).addClass('hide');
+                    $(this).siblings('.add').removeClass('hide');
+                    $(this).siblings('img').addClass('hide');
+                })
+            })
+</script>
+</body>
+</html>

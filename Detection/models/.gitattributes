@@ -1,0 +1,9 @@
+detection filter=lfs diff=lfs merge=lfs -text
+resnet34.pth filter=lfs diff=lfs merge=lfs -text
+resnext50.pth filter=lfs diff=lfs merge=lfs -text
+__init__.py filter=lfs diff=lfs merge=lfs -text
+__pycache__ filter=lfs diff=lfs merge=lfs -text
+resnet101.pth filter=lfs diff=lfs merge=lfs -text
+resnet18.pth filter=lfs diff=lfs merge=lfs -text
+resnet50.pth filter=lfs diff=lfs merge=lfs -text
+resnext101.pth filter=lfs diff=lfs merge=lfs -text
